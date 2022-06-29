@@ -1,2 +1,2 @@
 # Solidity
-All my work in Solidity language
+This is my solidity repository
