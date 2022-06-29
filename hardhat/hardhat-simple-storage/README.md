@@ -2,7 +2,7 @@
 
 -   To get started follow this list of instructions:
 
-```
+```shell
 git clone https://github.com/Vesloo/Vesloo.git
 cd Vesloo/solidity/hardhat/hardhat-simple-storage
 yarn install
@@ -11,10 +11,10 @@ yarn install
 -   Next, compile the contract (SimpleStorage.sol)
 
 ```shell
-hardhat compile
+yarn hardhat compile
 ```
 
--   Set the .env file by adding RINKEBY_RPC_URL to work with rinkeby
+-   Set the .env file by adding RINKEBY_RPC_URL and PRIVATE_KEY to work with rinkeby
 -   Run this command below to deploy the contract on rinkeby
 
 ```shell
