@@ -11,6 +11,9 @@ async function main() {
     console.log("SimpleStorage deployed at", simpleStorage.address);
 }
 
+// Verify the smart contract on etherscan.io
+async function verify(contractAddress, args) {}
+
 main()
     .then(() => process.exit(0))
     .catch((error) => {
