@@ -1,5 +1,7 @@
 # Simple Storage without
 
+## Get started
+
 -   To get started follow this list of instructions:
 
 ```
