@@ -37,4 +37,12 @@ contract SimpleStorage {
         myPeople.push(newPerson);
         nameToAge[_name] = _age;
     }
+
+    function retrievePerson(uint256 offset)
+        public
+        view
+        returns (People memory)
+    {
+        return myPeople[offset];
+    }
 }
