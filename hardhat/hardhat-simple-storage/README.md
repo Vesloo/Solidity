@@ -20,7 +20,7 @@ yarn hardhat compile
 
 ## Deploy the contract
 
--   Set the .env file by adding RINKEBY_RPC_URL, PRIVATE_KEY and ETHERSCAN_API_KEY to work with rinkeby
+-   Create the .env file and add RINKEBY_RPC_URL, PRIVATE_KEY and ETHERSCAN_API_KEY to work with rinkeby
 -   Run this command below to deploy the contract on rinkeby
 
 ```shell
