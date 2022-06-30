@@ -48,6 +48,30 @@ node scripts/deploy.js
 yarn hardhat verify --network <network> <DEPLOYED_CONTRACT_ADDRESS>
 ```
 
+## Hardhat special tasks
+
+-   There is one special task:
+
+```shell
+yarn hardhat block-number --network rinkeby
+```
+
+## Clean the cache and artifacts folder
+
+-   Run this command to clean the cache and artifacts folder
+
+```shell
+yarn hardhat clean
+```
+
+## Run tests
+
+-   To run a test run this command:
+
+```shell
+yarn hardhat test
+```
+
 <!-- yarn hardhat accounts
 yarn hardhat compile
 yarn hardhat clean
