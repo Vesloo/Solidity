@@ -1,6 +1,6 @@
 # How to setup the project
 
-## Initialize the project
+## Get started
 
 -   To get started follow this list of instructions:
 
@@ -41,6 +41,7 @@ node scripts/deploy.js
 
 ## Verify the contract on etherscan
 
+-   This is optional because the deploy script do it automatically
 -   Copy the smart contract address from the console and run:
 
 ```shell
