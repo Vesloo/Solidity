@@ -1,5 +1,7 @@
 # How to setup the project
 
+## Initialize the project
+
 -   To get started follow this list of instructions:
 
 ```shell
@@ -8,11 +10,15 @@ cd Vesloo/solidity/hardhat/hardhat-simple-storage
 yarn install
 ```
 
+## Compile
+
 -   Next, compile the contract (SimpleStorage.sol)
 
 ```shell
 yarn hardhat compile
 ```
+
+## Deploy the contract
 
 -   Set the .env file by adding RINKEBY_RPC_URL, PRIVATE_KEY and ETHERSCAN_API_KEY to work with rinkeby
 -   Run this command below to deploy the contract on rinkeby
@@ -31,6 +37,14 @@ yarn hardhat run scripts/deploy.js
 
 ```shell
 node scripts/deploy.js
+```
+
+## Verify the contract on etherscan
+
+-   Copy the smart contract address from the console and run:
+
+```shell
+yarn hardhat verify --network <network> <DEPLOYED_CONTRACT_ADDRESS>
 ```
 
 <!-- yarn hardhat accounts
