@@ -66,10 +66,18 @@ yarn hardhat clean
 
 ## Run tests
 
--   To run a test run this command:
+-   To run a test, run this command:
 
 ```shell
 yarn hardhat test
+```
+
+## Clean artifacts and cache
+
+-   Run this command to clean the cache and artifacts folder
+
+```shell
+yarn hardhat clean
 ```
 
 <!-- yarn hardhat accounts
