@@ -1,9 +1,10 @@
 node_modules
 .env
+coverage
+coverage.json
 typechain
 gas-report.txt
-coverage.json
-coverage
+deployments
 
 #Hardhat files
 cache
