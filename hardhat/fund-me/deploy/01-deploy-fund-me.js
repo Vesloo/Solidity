@@ -1,5 +1,8 @@
 // import
-const { networkConfig } = require("../helper-hardhat-config");
+const {
+    networkConfig,
+    developmentChains,
+} = require("../helper-hardhat-config");
 // function deployFunc() {
 //     console.log("hi");
 // }
@@ -16,12 +19,24 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deployer } = await getNamedAccounts();
     const chainId = network.config.chainId;
 
-    const ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"];
+    // const ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"];
+    let ethUsdPriceFeedAddress;
+    if (developmentChains.includes(network.name)) {
+        log("Local network detected - using mock");
+        const ethUsdAggregator = await deployments.get("MockV3Aggregator");
+        ethUsdPriceFeedAddress = ethUsdAggregator.address;
+    } else {
+        ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"];
+    }
 
     // When going for localhost or hardhat network, we want to use a mock
     const fundMe = await deploy("FundMe", {
         from: deployer,
-        args: [], // Put price feed address here
+        args: [ethUsdPriceFeedAddress], // Put price feed address here
         log: true,
     });
+
+    log("----------------------------------------------------");
 };
+
+module.exports.tags = ["all", "fund-me"];
