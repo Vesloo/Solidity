@@ -3,6 +3,7 @@ const {
     networkConfig,
     developmentChains,
 } = require("../helper-hardhat-config");
+const { verify } = require("../utils/verify");
 // function deployFunc() {
 //     console.log("hi");
 // }
@@ -22,7 +23,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     // const ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"];
     let ethUsdPriceFeedAddress;
     if (developmentChains.includes(network.name)) {
-        log("Local network detected - using mock");
         const ethUsdAggregator = await deployments.get("MockV3Aggregator");
         ethUsdPriceFeedAddress = ethUsdAggregator.address;
     } else {
@@ -30,11 +30,20 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     // When going for localhost or hardhat network, we want to use a mock
+    const args = [ethUsdPriceFeedAddress];
     const fundMe = await deploy("FundMe", {
         from: deployer,
-        args: [ethUsdPriceFeedAddress], // Put price feed address here
+        args: args, // Put price feed address here
         log: true,
+        waitConfirmations: network.config.blockConfirmations || 1,
     });
+
+    if (
+        !developmentChains.includes(network.name) &&
+        process.env.ETHERSCAN_API_KEY
+    ) {
+        await verify(fundMe.address, args);
+    }
 
     log("----------------------------------------------------");
 };

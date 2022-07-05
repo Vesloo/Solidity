@@ -1,14 +1,27 @@
 //SPDX-License-Identifier: MIT
+// Pragma first
 pragma solidity ^0.8.7;
 
+// Import 2nd
 import "./PriceConverter.sol";
 
-error notOwner();
-error notSent();
+// Error codes 3rd this is the name convention ContractName__ErrorCode
+error FundMe__notOwner();
+error FundMe__notSent();
 
+// Interface 4th, libraries 5th and contracts 6th
+
+/**
+ * @title A contract for crowdfunding
+ * @author Wesley Pigny
+ * @notice This is a demo of a funding contract
+ * @dev This implements price feed as our library
+ */
 contract FundMe {
+    // Type declarations 1st
     using PriceConverter for uint256;
 
+    // State variables 2nd
     // constant, immutable variable
     // Declaring constants and immutable instead of normal variables reduces the gas cost of the contract.
     uint256 public constant MINIMUM_USD = 50 * 1e18;
@@ -19,8 +32,17 @@ contract FundMe {
 
     mapping(address => uint256) public funderToTicket;
     mapping(address => uint256) public addressToAmountFunded;
-
     AggregatorV3Interface public priceFeed;
+
+    // Modifiers 3rd
+    modifier onlyOwner() {
+        //require(msg.sender == i_owner, "Sender is not owner");
+        // Reduce the gaz fee of the contract
+        if (msg.sender != i_owner) {
+            revert FundMe__notOwner();
+        }
+        _;
+    }
 
     // Set the owner of the contract
     constructor(address priceFeedAddress) {
@@ -28,6 +50,16 @@ contract FundMe {
         priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
+    // Functions fallback and receive 4th
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
+    // Normal functions 5th
     function fund() public payable {
         require(
             msg.value.getConversionRate(priceFeed) >= MINIMUM_USD,
@@ -62,28 +94,11 @@ contract FundMe {
         );
         // require(sent, "Not sent");
         if (!sent) {
-            revert notSent();
+            revert FundMe__notSent();
         }
     }
 
     function getNbFunders() public view returns (uint256) {
         return nbFunders;
-    }
-
-    modifier onlyOwner() {
-        //require(msg.sender == i_owner, "Sender is not owner");
-        // Reduce the gaz fee of the contract
-        if (msg.sender != i_owner) {
-            revert notOwner();
-        }
-        _;
-    }
-
-    receive() external payable {
-        fund();
-    }
-
-    fallback() external payable {
-        fund();
     }
 }
