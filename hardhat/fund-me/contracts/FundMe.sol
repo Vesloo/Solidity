@@ -35,6 +35,9 @@ contract FundMe {
     AggregatorV3Interface public priceFeed;
 
     // Modifiers 3rd
+    /**
+     * @notice Modifier to allow only the owner to call the functions
+     */
     modifier onlyOwner() {
         //require(msg.sender == i_owner, "Sender is not owner");
         // Reduce the gaz fee of the contract
@@ -45,12 +48,18 @@ contract FundMe {
     }
 
     // Set the owner of the contract
+    /**
+     * @notice Constructor sets the owner of the contract and the price feed
+     */
     constructor(address priceFeedAddress) {
         i_owner = msg.sender;
         priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
     // Functions fallback and receive 4th
+    /**
+     * @notice Fallback and receive function executes fund function
+     */
     receive() external payable {
         fund();
     }
@@ -60,6 +69,9 @@ contract FundMe {
     }
 
     // Normal functions 5th
+    /**
+     * @notice Fund function allows to fund the contract
+     */
     function fund() public payable {
         require(
             msg.value.getConversionRate(priceFeed) >= MINIMUM_USD,
@@ -71,11 +83,19 @@ contract FundMe {
         createTicket();
     }
 
+    /**
+     * @notice creates a ticket based on the address of the funder
+     * @dev The ticket is incremented for each funder and start at 0
+     */
     function createTicket() public {
         ticket += 1;
         funderToTicket[msg.sender] = ticket;
     }
 
+    /**
+     * @notice Allow owner to withdraw the funds of the contract
+     * @dev Check if this is the owner with onlyOwner modifier
+     */
     function withdraw() public onlyOwner {
         for (uint256 i; i < funders.length; i++) {
             // Reset the balance of each funder to 0 in the mapping
@@ -98,6 +118,10 @@ contract FundMe {
         }
     }
 
+    /**
+     * @notice Get the number of funders
+     * @return uint256 the number of funders
+     */
     function getNbFunders() public view returns (uint256) {
         return nbFunders;
     }
