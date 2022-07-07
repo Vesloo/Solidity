@@ -43,5 +43,51 @@ describe("FundMe", async () => {
             const response = await fundMe.nbFunders();
             assert.equal(response.toString(), "1");
         });
+        it("Should update the ticket number", async () => {
+            await fundMe.fund({ value: sendValue });
+            const response = await fundMe.ticket();
+            assert.equal(response.toString(), "1");
+        });
+        it("Should add a funder in the funders array", async () => {
+            await fundMe.fund({ value: sendValue });
+            const response = await fundMe.funders(0);
+            assert.equal(response, deployer);
+        });
+    });
+    describe("withdraw", async () => {
+        let owner;
+        beforeEach(async () => {
+            owner = await getNamedAccounts().deployer;
+            await fundMe.fund({ value: sendValue });
+        });
+        it("Should revert an error if the deployer is not the owner", async () => {
+            await expect(fundMe.withdraw(deployer)).to.be.reverted;
+        });
+        it("Should withdraw the funds", async () => {
+            // 1. Arrange
+            const startingFundMeBalance = await fundMe.provider.getBalance(
+                fundMe.address
+            );
+            const startingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            );
+            // 2. Act
+            const transactionResponse = await fundMe.withdraw();
+            const transactionReceipt = await transactionResponse.wait(1);
+            const { gasUsed, effectiveGasPrice } = transactionReceipt;
+            const gasCost = gasUsed.mul(effectiveGasPrice);
+            const endingFundMeBalance = await fundMe.provider.getBalance(
+                fundMe.address
+            );
+            const endingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            );
+            // 3. Assert
+            assert.equal(endingFundMeBalance, 0);
+            assert.equal(
+                startingFundMeBalance.add(startingDeployerBalance).toString(),
+                endingDeployerBalance.add(gasCost).toString()
+            );
+        });
     });
 });

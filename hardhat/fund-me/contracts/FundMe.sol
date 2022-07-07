@@ -117,12 +117,4 @@ contract FundMe {
             revert FundMe__notSent();
         }
     }
-
-    /**
-     * @notice Get the number of funders
-     * @return uint256 the number of funders
-     */
-    function getNbFunders() public view returns (uint256) {
-        return nbFunders;
-    }
 }
