@@ -53,15 +53,13 @@ describe("FundMe", async () => {
             const response = await fundMe.funders(0);
             assert.equal(response, deployer);
         });
+        it("should call receive function");
     });
     describe("withdraw", async () => {
         let owner;
         beforeEach(async () => {
             owner = await getNamedAccounts().deployer;
             await fundMe.fund({ value: sendValue });
-        });
-        it("Should revert an error if the deployer is not the owner", async () => {
-            await expect(fundMe.withdraw(deployer)).to.be.reverted;
         });
         it("Should withdraw the funds", async () => {
             // 1. Arrange
