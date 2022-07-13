@@ -27,10 +27,10 @@ yarn hardhat compile
 yarn hardhat deploy --network rinkeby
 ```
 
--   You can also deploy the contract on hardhat local network with mocks
+-   the 'all' tag is used to verify if the contract is deployed with mocks (local network)
 
 ```shell
-yarn hardhat deploy --tags mocks
+yarn hardhat deploy --tags all
 ```
 
 ## Verify the contract on etherscan
@@ -61,14 +61,6 @@ yarn hardhat clean
 
 ```shell
 yarn hardhat test
-```
-
-## Clean artifacts and cache
-
--   Run this command to clean the cache and artifacts folders
-
-```shell
-yarn hardhat clean
 ```
 
 ## Run coverage
