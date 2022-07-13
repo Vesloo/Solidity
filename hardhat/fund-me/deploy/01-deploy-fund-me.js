@@ -46,6 +46,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     log("----------------------------------------------------");
+
+    for (let i = 0; i < 10; i++) {
+        log(
+            `Location ${i}: ${await ethers.provider.getStorageAt(
+                fundMe.address,
+                i
+            )}`
+        );
+    }
 };
 
 module.exports.tags = ["all", "fund-me"];

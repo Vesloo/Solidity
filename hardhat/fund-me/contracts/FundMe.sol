@@ -3,6 +3,7 @@
 pragma solidity ^0.8.7;
 
 // Import 2nd
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 
 // Error codes 3rd this is the name convention ContractName__ErrorCode
