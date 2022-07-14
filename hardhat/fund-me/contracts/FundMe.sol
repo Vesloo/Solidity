@@ -25,15 +25,15 @@ contract FundMe {
     // State variables 2nd
     // constant, immutable variable
     // Declaring constants and immutable instead of normal variables reduces the gas cost of the contract.
-    uint256 public constant MINIMUM_USD = 50 * 1e18;
-    address public immutable i_owner;
-    address[] public s_funders;
-    uint256 public s_nbFunders = 0;
-    uint256 public s_ticket = 0;
+    address[] private s_funders;
+    uint256 private constant MINIMUM_USD = 50 * 1e18;
+    address private immutable i_owner;
+    uint256 private s_nbFunders = 0;
+    uint256 private s_ticket = 0;
 
-    mapping(address => uint256) public s_funderToTicket;
-    mapping(address => uint256) public s_addressToAmountFunded;
-    AggregatorV3Interface public s_priceFeed;
+    mapping(address => uint256) private s_funderToTicket;
+    mapping(address => uint256) private s_addressToAmountFunded;
+    AggregatorV3Interface private s_priceFeed;
 
     // Modifiers 3rd
     /**
@@ -119,6 +119,10 @@ contract FundMe {
         }
     }
 
+    /**
+     * @notice Allow owner to withdraw the funds of the contract (cheaper version)
+     * @dev Check if this is the owner with onlyOwner modifier
+     */
     function cheaperWithdraw() public onlyOwner {
         address[] memory funders = s_funders;
 
@@ -141,5 +145,37 @@ contract FundMe {
         if (!sent) {
             revert FundMe__notSent();
         }
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
+    }
+
+    function getNbFunders() public view returns (uint256) {
+        return s_nbFunders;
+    }
+
+    function getTicket() public view returns (uint256) {
+        return s_ticket;
+    }
+
+    function getFunder(uint256 _index) public view returns (address) {
+        return s_funders[_index];
+    }
+
+    function getAddressToAmountFunded(address _address)
+        public
+        view
+        returns (uint256)
+    {
+        return s_addressToAmountFunded[_address];
+    }
+
+    function getFunderToTicket(address _funder) public view returns (uint256) {
+        return s_funderToTicket[_funder];
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return s_priceFeed;
     }
 }
