@@ -42,6 +42,7 @@ module.exports = {
         enabled: true,
         currency: "USD",
         outputFile: "gas-report.txt",
+        token: "ETH",
         noColors: true,
         coinmarketcap: COINMARKETCAP_API_KEY,
     },
