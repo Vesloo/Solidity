@@ -63,6 +63,13 @@ yarn hardhat clean
 yarn hardhat test
 ```
 
+-   Run a specific test
+-   You can see tests names in tests files
+
+```shell
+yarn hardhat test --grep "<test name>"
+```
+
 ## Run coverage
 
 ```shell
