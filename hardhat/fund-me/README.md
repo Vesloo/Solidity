@@ -57,7 +57,7 @@ yarn hardhat clean
 
 -   Unit tests are done locally
 -   Staging tests are done on testnets (rinkeby, ropsten, kovan...)
--   To run a test, run this command:
+-   To run a unit test, run this command:
 
 ```shell
 yarn hardhat test
@@ -68,6 +68,12 @@ yarn hardhat test
 
 ```shell
 yarn hardhat test --grep "<test name>"
+```
+
+-   To run a staging test, run this command:
+
+```shell
+yarn hardhat test --network rinkeby
 ```
 
 ## Run coverage
