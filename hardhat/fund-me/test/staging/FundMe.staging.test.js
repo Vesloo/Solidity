@@ -1,9 +1,7 @@
-const { assert, expect } = require("chai");
-const { deployments, ethers, getNamedAccounts, network } = require("hardhat");
+const { assert } = require("chai");
+const { network, ethers, getNamedAccounts } = require("hardhat");
 const { developmentChains } = require("../../helper-hardhat-config");
 
-// Running staging test is the last step before deploying to production
-// These tests are run on testnet (rinkeby here)
 developmentChains.includes(network.name)
     ? describe.skip
     : describe("FundMe Staging Tests", async function () {
@@ -17,8 +15,7 @@ developmentChains.includes(network.name)
 
           it("allows people to fund and withdraw", async function () {
               await fundMe.fund({ value: sendValue });
-              const transactionResponse = await fundMe.withdraw();
-              const transactionReceipt = await transactionResponse.wait(1);
+              await fundMe.withdraw();
 
               const endingFundMeBalance = await fundMe.provider.getBalance(
                   fundMe.address
