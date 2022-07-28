@@ -1,4 +1,3 @@
-// Imports
 const { ethers, getNamedAccounts } = require("hardhat");
 
 async function main() {
@@ -7,11 +6,9 @@ async function main() {
 
     console.log("Got contract from: ", fundMe.address);
 
-    const transactionResponse = await fundMe.fund({
-        value: ethers.utils.parseEther("0.02"),
-    });
+    const transactionResponse = await fundMe.withdraw();
     await transactionResponse.wait();
-    console.log("Funded!");
+    console.log("Withdrew!");
 }
 
 main()
