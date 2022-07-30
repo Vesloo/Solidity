@@ -81,3 +81,12 @@ yarn hardhat test --network rinkeby
 ```shell
 yarn hardhat coverage
 ```
+
+## Run scripts
+
+-   There are two scripts:
+
+```shell
+yarn hardhat run scripts/fund.js
+yarn hardhat run scripts/withdraw.js
+```
