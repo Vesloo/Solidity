@@ -1,0 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
+.show-account,
+.fund,
+.withdraw,
+.balance {
+    display: none;
+}
